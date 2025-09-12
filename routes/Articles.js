@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Articles = require('./models/Article'); // ✅ Attention au nom exact du fichier
+const Articles = require('../models/Article'); // ✅ Attention au nom exact du fichier
 
 // GET tous les articles
 router.get('/', async (req, res) => {
