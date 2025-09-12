@@ -3,7 +3,7 @@ const app = express();
 const PORT = process.env.PORT||5000;
 const cors = require('cors');
 const mongoose = require('mongoose');
-const articlesRoutes = require('../routes/Articles');
+const articlesRoutes = require('./routes/Articles');
 
 const MONGO_URI = "mongodb+srv://marieycorentin97_db_user:5mnvRFbBUW4HhrpM@cluster0.snvtxyv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
