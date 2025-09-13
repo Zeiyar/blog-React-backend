@@ -14,6 +14,7 @@ router.get('/', async (req, res) => {
 
 // GET un seul article par ID
 router.get('/:id', async (req, res) => {
+    console.log("l article reçu dans body :", req.body)
     try {
         const article = await Articles.findById(req.params.id);
         if (!article) return res.status(404).json({ message: 'Article non trouvé' });
