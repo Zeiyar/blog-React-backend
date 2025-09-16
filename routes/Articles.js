@@ -56,7 +56,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE supprimer un article
-router.delete('/:id',auth, async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
         const deletedArticle = await Articles.findByIdAndDelete(req.params.id);
         if (!deletedArticle) return res.status(404).json({ message: 'Article non trouvé' });
