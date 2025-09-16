@@ -21,12 +21,5 @@ app.use('/articles', articlesRoutes);
 app.use('/auth', authRoutes);
 
 app.listen(PORT, ()=> {
-<<<<<<< HEAD
     console.log(`Server running on ${PORT}`);
 });
-=======
-    console.log(`Server running on http://localhost:${PORT}`);
-
-});
-
->>>>>>> 48bfff43656584424014b2d454c0669aea0e6b79
