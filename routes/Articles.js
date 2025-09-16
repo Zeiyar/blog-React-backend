@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Articles = require('../models/Article'); // ✅ Attention au nom exact du fichier
+const Articles = require('../models/Article');
 
 // GET tous les articles
 router.get('/', async (req, res) => {
@@ -56,7 +56,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE supprimer un article
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',auth, async (req, res) => {
     try {
         const deletedArticle = await Articles.findByIdAndDelete(req.params.id);
         if (!deletedArticle) return res.status(404).json({ message: 'Article non trouvé' });
