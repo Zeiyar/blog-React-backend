@@ -22,6 +22,7 @@ router.post("/register",async (req,res)=>{
 
 //LOGIN//
 router.post("/login", async(req,res)=>{
+    console.log("REQ.BODY:", req.body);
     try{
         const {email,password} = req.body;
         const user = await User.findOne({email});
@@ -29,7 +30,8 @@ router.post("/login", async(req,res)=>{
 
         const isPasswordOk = await bcrypt.compare(password,user.password);
         if (!isPasswordOk) throw new Error ("Your password is incorrect");
-
+        
+        console.log(process.env.JWT_SECRET)
         const token = jwt.sign({userId: user._id},process.env.JWT_SECRET,{expiresIn : "1h"})
     
         res.json({message : `Login successfull !`,token ,username: user.username});
