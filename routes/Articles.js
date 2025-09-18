@@ -29,7 +29,7 @@ router.post('/',auth, async (req, res) => {
     const article = new Articles({
         title: req.body.title,
         content: req.body.content,
-        author: req.body.author
+        author: req.user.username
     });
 
     try {
