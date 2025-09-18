@@ -30,9 +30,9 @@ router.post("/login", async(req,res)=>{
         const isPasswordOk = await bcrypt.compare(password,user.password);
         if (!isPasswordOk) throw new Error ("Your password is incorrect");
 
-        const token = jwt.sign({userId: user._id},process.env.JWT_SECRET,{expireIn : "1h"})
+        const token = jwt.sign({userId: user._id},process.env.JWT_SECRET,{expiresIn : "1h"})
     
-        res.json({message : `Login successfull, greating ${user.username} !`,token});
+        res.json({message : `Login successfull !`,token ,username: user.username});
     }catch(err){
         res.status(400).json({message : err.message});
     }
