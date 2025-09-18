@@ -25,7 +25,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST créer un article
-router.post('/', async (req, res) => {
+router.post('/',auth, async (req, res) => {
     const article = new Articles({
         title: req.body.title,
         content: req.body.content,
@@ -41,7 +41,7 @@ router.post('/', async (req, res) => {
 });
 
 // PUT modifier un article
-router.put('/:id', async (req, res) => {
+router.put('/:id',auth, async (req, res) => {
     try {
         const updatedArticle = await Articles.findByIdAndUpdate(
             req.params.id,
@@ -56,7 +56,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE supprimer un article
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',auth, async (req, res) => {
     try {
         const deletedArticle = await Articles.findByIdAndDelete(req.params.id);
         if (!deletedArticle) return res.status(404).json({ message: 'Article non trouvé' });

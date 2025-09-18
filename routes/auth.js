@@ -30,7 +30,7 @@ router.post("/login", async(req,res)=>{
 
         const isPasswordOk = await bcrypt.compare(password,user.password);
         if (!isPasswordOk) throw new Error ("Your password is incorrect");
-        
+
         console.log(process.env.JWT_SECRET)
         const token = jwt.sign({userId: user._id},process.env.JWT_SECRET,{expiresIn : "1h"})
     
