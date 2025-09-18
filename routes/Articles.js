@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Articles = require('../models/Article');
-
+const auth = require("../middleware/auth");
 // GET tous les articles
 router.get('/', async (req, res) => {
     try {
