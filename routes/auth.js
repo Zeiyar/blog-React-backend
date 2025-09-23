@@ -32,7 +32,7 @@ router.post("/login", async(req,res)=>{
         if (!isPasswordOk) throw new Error ("Your password is incorrect");
 
         console.log(process.env.JWT_SECRET)
-        const token = jwt.sign({userId: user._id, username: user.username},process.env.JWT_SECRET,{expiresIn : "1h"})
+        const token = jwt.sign({userId: user._id, username: user.username, email: user.email},process.env.JWT_SECRET,{expiresIn : "1h"})
     
         res.json({message : `Login successfull !`,token ,username: user.username});
     }catch(err){

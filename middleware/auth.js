@@ -11,7 +11,7 @@ function auth (req,res,next){
 
     jwt.verify(token, process.env.JWT_SECRET, (err,decoded)=>{
         if (err) return res.status(400).json({message : "Invalid token, please reconnect"});
-        req.user = decoded
+        req.user = decoded;
         next();
     });
 }
