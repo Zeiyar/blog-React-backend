@@ -11,7 +11,7 @@ const articleSchema = Joi.object({
 })
 
 //creer commentaire
-router.post("/comments",auth,async(req,res)=>{
+router.post("/",auth,async(req,res)=>{
     const {error} = articleSchema.validate(req.body)
     if (error) return res.status(400).json({message: error.details[0].message});
 
@@ -32,7 +32,7 @@ router.post("/comments",auth,async(req,res)=>{
 })
 //recuperer commentaires par articles
 
-router.get("/comments/:articleId",async(req,res)=>{
+router.get("/:articleId",async(req,res)=>{
     try{
     const comments = await Comment.find({ articleId: req.params.articleId }).sort({createdAt:-1});
     res.json(comments);}
@@ -40,3 +40,5 @@ router.get("/comments/:articleId",async(req,res)=>{
         res.status(500).json({message:err.message});
     }
 });
+
+module.exports = router;
