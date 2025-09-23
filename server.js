@@ -5,6 +5,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const articlesRoutes = require('./routes/Articles');
 const authRoutes = require('./routes/auth');
+const commentsRoutes = require('./routes/Comments');
 
 const MONGO_URI = process.env.MONGO_URI;
 
@@ -22,6 +23,7 @@ app.use(cors({
 app.use(express.json());
 app.use('/articles', articlesRoutes);
 app.use('/auth', authRoutes);
+app.use('/comments', commentsRoutes);
 
 app.listen(PORT, ()=> {
     console.log(`Server running on ${PORT}`);
