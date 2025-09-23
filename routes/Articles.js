@@ -2,6 +2,13 @@ const express = require('express');
 const router = express.Router();
 const Articles = require('../models/Article');
 const auth = require("../middleware/auth");
+const Joi = require('joi');
+
+const articleSchema = Joi.object({
+    title: Joi.string().min(3).max(100).required(),
+    content: Joi.string().min(1).required(),
+});
+
 // GET tous les articles
 router.get('/', async (req, res) => {
     try {
@@ -26,6 +33,9 @@ router.get('/:id', async (req, res) => {
 
 // POST créer un article
 router.post('/',auth, async (req, res) => {
+    const {error} = articleSchema.validate(req.body);
+    if (error) return res.status(400).json({message : error.details[0].message});
+    
     const article = new Articles({
         title: req.body.title,
         content: req.body.content,
