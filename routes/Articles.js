@@ -60,20 +60,20 @@ router.put('/:id',auth, async (req, res) => {
 });
 
 // DELETE supprimer un article
-router.delete('/:id',auth, async (req, res) => {
-    try {
-        const article = await Articles.findById(req.params.id);
-        if (!article) return res.status(404).json({ message: 'Article non trouvé' });
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    const article = await Articles.findById(req.params.id);
+    if (!article) return res.status(404).json({ message: 'Article non trouvé' });
 
-        if (req.user.username !== article.author && req.user.role !== "admin"){
-            return res.status(403).json({message : 'Vous n’avez pas la permission de supprimer cet article'})
-        }
-        await article.remove()
-
-        res.json({ message: 'Article supprimé avec succès' });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+    if (req.user.username !== article.author && req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Vous n’avez pas la permission de supprimer cet article' });
     }
+
+    await article.remove();
+    res.json({ message: 'Article supprimé avec succès' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
 module.exports = router;
