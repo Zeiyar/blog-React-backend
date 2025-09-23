@@ -69,7 +69,7 @@ router.delete('/:id', auth, async (req, res) => {
       return res.status(403).json({ message: 'Vous n’avez pas la permission de supprimer cet article' });
     }
 
-    await article.remove();
+    await Articles.findByIdAndDelete(req.params.id);
     res.json({ message: 'Article supprimé avec succès' });
   } catch (err) {
     res.status(500).json({ message: err.message });
