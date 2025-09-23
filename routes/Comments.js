@@ -5,6 +5,7 @@ const Joi = require("joi");
 const auth = require("../middleware/auth");
 
 const articleSchema = Joi.object({
+    articleId: Joi.string().required,
     content: Joi.string().min(3).max(300).required,
     rating: Joi.number().min(1).max(5),
 })
@@ -15,6 +16,7 @@ router.post("/comments",auth,async(req,res)=>{
     if (error) return res.status(400).json({message: error.details[0].message});
 
     const comment = new Comment({
+        articleId: req.body.articleId,
         username: req.user.username,
         rating: req.body.rating,
         content: req.body.content,
@@ -31,6 +33,10 @@ router.post("/comments",auth,async(req,res)=>{
 //recuperer commentaires par articles
 
 router.get("/comments/:articleId",async(req,res)=>{
-    const comments = await Comment.find({ articleId: req.params.articleId });
-    res.json(comments);
+    try{
+    const comments = await Comment.find({ articleId: req.params.articleId }).sort({createdAt:-1});
+    res.json(comments);}
+    catch(err){
+        res.status(500).json({message:err.message});
+    }
 });
