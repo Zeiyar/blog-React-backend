@@ -5,8 +5,8 @@ const Joi = require("joi");
 const auth = require("../middleware/auth");
 
 const articleSchema = Joi.object({
-    articleId: Joi.string().required,
-    content: Joi.string().min(3).max(300).required,
+    articleId: Joi.string().required(),
+    content: Joi.string().min(3).max(300).required(),
     rating: Joi.number().min(1).max(5),
 })
 
