@@ -30,12 +30,20 @@ router.post("/",auth,async(req,res)=>{
         res.status(400).json({message: error.message})
     }
 })
-//recuperer commentaires par articles
 
+//recuperer commentaires par articles
 router.get("/:articleId",async(req,res)=>{
     try{
-    const comments = await Comment.find({ articleId: req.params.articleId }).sort({createdAt:-1});
-    res.json(comments);}
+    const page = parseFloat(req.query.page)||1;
+    const limit = parseFloat(req.query.limit)||20;
+    const skip = (page-1)*limit;
+
+    const comments = await Comment.find({ articleId: req.params.articleId }).skip(skip).limit(limit).sort({createdAt:-1});
+
+    const total = await Comment.countDocuments();
+
+    res.json({comments,pages : Math.ceil(total/limit,page,limit)});
+}
     catch(err){
         res.status(500).json({message:err.message});
     }
