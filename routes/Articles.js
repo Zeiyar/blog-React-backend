@@ -12,8 +12,16 @@ const articleSchema = Joi.object({
 // GET tous les articles
 router.get('/', async (req, res) => {
     try {
-        const articles = await Articles.find();
-        res.json(articles);
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 20;
+        const skip = (page-1)*limit;
+
+        const articles = await Articles.find().sort({createdAt:-1}).skip(skip).limit(limit);
+
+        const total = await Articles.countDocuments();
+
+        res.json({articles, page, limit, pages:Match.ceil(total/limit)});
+        
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -35,7 +43,7 @@ router.get('/:id', async (req, res) => {
 router.post('/',auth, async (req, res) => {
     const {error} = articleSchema.validate(req.body);
     if (error) return res.status(400).json({message : error.details[0].message});
-    
+
     const article = new Articles({
         title: req.body.title,
         content: req.body.content,
