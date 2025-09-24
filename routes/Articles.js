@@ -64,7 +64,7 @@ router.put('/:id',auth, async (req, res) => {
         const article = await Articles.findById(req.params.id);
         if (!article) return res.status(404).json({ message: 'Article non trouvé' });
 
-        if (req.user.username !== article.author && req.user.role !== "admin"){
+        if (req.user.username !== article.author && req.user.username !== "ADMIN"){
             return res.status(403).json({message : 'Vous n’avez pas la permission de modifier cet article' })
         }
         article.title = req.body.title;
@@ -83,7 +83,7 @@ router.delete('/:id', auth, async (req, res) => {
     const article = await Articles.findById(req.params.id);
     if (!article) return res.status(404).json({ message: 'Article non trouvé' });
 
-    if (req.user.username !== article.author && req.user.role !== 'admin') {
+    if (req.user.username !== article.author && req.user.username !== 'ADMIN') {
       return res.status(403).json({ message: 'Vous n’avez pas la permission de supprimer cet article' });
     }
 
