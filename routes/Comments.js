@@ -41,4 +41,22 @@ router.get("/:articleId",async(req,res)=>{
     }
 });
 
+//supprimer
+
+router.delete("/:articleId/:commentId",auth,async(req,res)=>{
+    try{
+        const comment = await Comment.findbyId(req.params.commentId);
+        if (!comment) return res.status(400).json({message : "comment not found"});
+        
+        if (comment.username !== req.user.username || req.user.username !== "ADMIN"){
+            return res.status(403).json({ message: "Not authorized" });
+        }
+        await comment.deleteOne();
+        res.json({message : "Comment deleted successfully"});
+    }
+    catch(err){
+        res.status(500).json({message : err.message});
+    }
+})
+
 module.exports = router;
