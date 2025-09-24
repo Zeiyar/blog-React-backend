@@ -53,7 +53,7 @@ router.get("/:articleId",async(req,res)=>{
 
 router.delete("/:articleId/:commentId",auth,async(req,res)=>{
     try{
-        const comment = await Comment.findbyId(req.params.commentId);
+        const comment = await Comment.findById(req.params.commentId);
         if (!comment) return res.status(400).json({message : "comment not found"});
         
         if (comment.username !== req.user.username || req.user.username !== "ADMIN"){
