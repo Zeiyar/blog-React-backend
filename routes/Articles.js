@@ -20,8 +20,8 @@ router.get('/', async (req, res) => {
 
         const total = await Articles.countDocuments();
 
-        res.json({articles, page, limit, pages:Match.ceil(total/limit)});
-        
+        res.json({articles, page, limit, pages : Math.ceil(total/limit)});
+
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

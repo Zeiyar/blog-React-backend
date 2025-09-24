@@ -40,9 +40,9 @@ router.get("/:articleId",async(req,res)=>{
 
     const comments = await Comment.find({ articleId: req.params.articleId }).skip(skip).limit(limit).sort({createdAt:-1});
 
-    const total = await Comment.countDocuments();
+    const total = await Comment.countDocuments({ articleId: req.params.articleId });
 
-    res.json({comments,pages : Math.ceil(total/limit,page,limit)});
+    res.json({comments,page,limit,pages : Math.ceil(total/limit)});
 }
     catch(err){
         res.status(500).json({message:err.message});
