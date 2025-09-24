@@ -3,6 +3,7 @@ const router = express.Router();
 const Comment = require("../models/Comment");
 const Joi = require("joi");
 const auth = require("../middleware/auth");
+const Article = require("../models/Article");
 
 const articleSchema = Joi.object({
     articleId: Joi.string().required(),
@@ -55,8 +56,11 @@ router.delete("/:articleId/:commentId",auth,async(req,res)=>{
     try{
         const comment = await Comment.findById(req.params.commentId);
         if (!comment) return res.status(400).json({message : "comment not found"});
+
+        const article = await Article.findById(req.params.articleId);
+        if (!article) return res.status(400).json({ message: "Article not found" });
         
-        if (comment.username !== req.user.username || req.user.username !== "ADMIN"){
+        if (comment.username !== req.user.username && req.user.username !== "ADMIN" && article.author !== req.user.username){
             return res.status(403).json({ message: "Not authorized" });
         }
         await comment.deleteOne();
